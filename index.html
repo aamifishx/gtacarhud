@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="carhud-container" style="display: none;">
+        <div class="speedo-section">
+            <span id="speed">000</span>
+            <span class="unit">KM/H</span>
+        </div>
+        <div class="divider">|</div>
+        <div class="stats-section">
+            <div class="stat-row">
+                <i class="icon fa-solid fa-gas-pump"></i>
+                <span class="value" id="fuel">100%</span>
+            </div>
+            <div class="stat-row" id="engine-row">
+                <i class="icon fa-solid fa-wrench"></i>
+                <span class="value" id="engine">100%</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funkcja aktualizująca prędkość, paliwo i silnik
+        function updateHud(speed, fuel, engine) {
+            const hudContainer = document.getElementById('carhud-container');
+            if (hudContainer.style.display !== 'flex') {
+                hudContainer.style.display = 'flex';
+            }
+
+            let formattedSpeed = speed.toString().padStart(3, '0');
+            document.getElementById('speed').innerHTML = `<span class="gray-zeroes">${formattedSpeed.slice(0, -speed.toString().length)}</span>${speed}`;
+
+            document.getElementById('fuel').innerText = Math.round(fuel) + "%";
+            
+            let engineHealth = Math.round(engine / 10);
+            document.getElementById('engine').innerText = engineHealth + "%";
+            document.getElementById('engine-row').style.color = (engineHealth < 40) ? '#ff3333' : '#ffffff';
+        }
+
+        function hideHud() {
+            document.getElementById('carhud-container').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
